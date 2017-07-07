@@ -97,7 +97,6 @@ $ composer require urbanara/catalog-promotion-plugin
         ];
 
         ```
-g
 4. If you want to see strikeout prices in your shop you need to customize templates on your own. A sample customization is available under `tests/Application/app/Resources/SyliusShopBundle`
 
 ## Usage
