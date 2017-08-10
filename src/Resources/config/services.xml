@@ -5,10 +5,8 @@
         <import resource="services/actions.xml"/>
         <import resource="services/blocks.xml"/>
         <import resource="services/decorations.xml"/>
-        <import resource="services/elastic_search.xml"/>
         <import resource="services/forms.xml"/>
         <import resource="services/rules.xml"/>
-        <import resource="services/shop_api.xml"/>
         <import resource="services/twig.xml"/>
         <import resource="services/validators.xml"/>
     </imports>

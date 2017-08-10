@@ -5,11 +5,11 @@
     "license": "MIT",
     "require": {
         "php": "^7.1",
-
-        "sylius/elastic-search-plugin": "^1.0@alpha",
-        "sylius/shop-api-plugin": "^1.0@beta",
-        "sylius/sylius": "^1.0@dev",
-        "symfony/monolog-bundle": "^3.0"
+        "sylius/sylius": "^1.0@dev"
+    },
+    "suggest": {
+        "sylius/shop-api-plugin": "Shop API for Sylius eCommerce applications.",
+        "sylius/elastic-search-plugin": "ElasticSearch integration with advanced filtering options for Sylius eCommerce applications."
     },
     "authors": [
         {
