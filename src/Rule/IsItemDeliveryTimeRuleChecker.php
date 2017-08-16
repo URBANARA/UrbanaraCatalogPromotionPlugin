@@ -16,7 +16,7 @@ final class IsItemDeliveryTimeRuleChecker implements RuleCheckerInterface
     const CONFIG_KEY_CRITERIA = 'criteria';
     const CONFIG_KEY_WEEKS = 'weeks';
 
-    const PRODUCT_ATTRIBUTE_DELIVERY_TIME = 'eta_date';
+    const PRODUCT_ATTRIBUTE_DELIVERY_TIME = 'shop_eta_date';
 
     const CRITERIA_MORE = 'more';
     const CRITERIA_LESS = 'less';
@@ -52,15 +52,8 @@ final class IsItemDeliveryTimeRuleChecker implements RuleCheckerInterface
         }
 
         $etaDate = $etaAttribute->getValue();
-        if (!preg_match(self::REGEX_VALID_ISO_DATETIME, $etaDate)) {
-            throw new CatalogPromotionRuleException(
-                sprintf(self::ERROR_MSG_ETA_NOT_FOUND, $productVariant->getProduct()->getId())
-            );
-        }
 
-        $etaParsedDate = \DateTime::createFromFormat(DATE_ISO8601, $etaAttribute->getValue());
-
-        if (!$etaParsedDate || !($etaParsedDate instanceof \DateTime)) {
+        if (!$etaDate || !($etaDate instanceof \DateTime)) {
             throw new CatalogPromotionRuleException(
                 sprintf(self::ERROR_MSG_ETA_NOT_FOUND, $productVariant->getProduct()->getId())
             );
@@ -70,7 +63,7 @@ final class IsItemDeliveryTimeRuleChecker implements RuleCheckerInterface
             throw new CatalogPromotionRuleException(self::ERROR_MSG_NO_CRITERIA_OR_WEEKS_NUMBER_ITEMS_FOUND);
         }
 
-        return $this->validateElegibility($configuration[self::CONFIG_KEY_CRITERIA], $configuration[self::CONFIG_KEY_WEEKS], $etaParsedDate);
+        return $this->validateElegibility($configuration[self::CONFIG_KEY_CRITERIA], $configuration[self::CONFIG_KEY_WEEKS], $etaDate);
     }
 
     /**
