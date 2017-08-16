@@ -5,7 +5,8 @@
     "license": "MIT",
     "require": {
         "php": "^7.1",
-        "sylius/sylius": "^1.0@dev"
+
+        "sylius/sylius": "^1.0@beta"
     },
     "suggest": {
         "sylius/shop-api-plugin": "Shop API for Sylius eCommerce applications.",
