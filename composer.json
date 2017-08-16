@@ -6,10 +6,11 @@
     "require": {
         "php": "^7.1",
 
-        "sylius/elastic-search-plugin": "^1.0@alpha",
-        "sylius/shop-api-plugin": "^1.0@beta",
-        "sylius/sylius": "^1.0@beta",
-        "symfony/monolog-bundle": "^3.0"
+        "sylius/sylius": "^1.0@beta"
+    },
+    "suggest": {
+        "sylius/shop-api-plugin": "Shop API for Sylius eCommerce applications.",
+        "sylius/elastic-search-plugin": "ElasticSearch integration with advanced filtering options for Sylius eCommerce applications."
     },
     "authors": [
         {
@@ -35,7 +36,9 @@
         "phpspec/phpspec": "^3.2",
         "phpunit/phpunit": "^5.6",
         "se/selenium-server-standalone": "^2.52",
-        "symfony/symfony": "~3.2, <3.3"
+        "symfony/symfony": "~3.2, <3.3",
+        "sylius/shop-api-plugin": "^1.0@beta",
+        "sylius/elastic-search-plugin": "^1.0@alpha"
     },
     "autoload": {
         "psr-4": {
