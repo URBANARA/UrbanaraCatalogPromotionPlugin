@@ -5,7 +5,6 @@
     "license": "MIT",
     "require": {
         "php": "^7.1",
-
         "sylius/sylius": "^1.0.0"
     },
     "suggest": {
@@ -33,7 +32,7 @@
         "lakion/api-test-case": "^1.2",
         "lakion/mink-debug-extension": "^1.2.3",
         "matthiasnoback/symfony-dependency-injection-test": "^1.0",
-        "phpspec/phpspec": "^4.0",
+        "phpspec/phpspec": "^3.2",
         "phpunit/phpunit": "^5.6",
         "se/selenium-server-standalone": "^2.52",
         "symfony/symfony": "~3.2, <3.3",
