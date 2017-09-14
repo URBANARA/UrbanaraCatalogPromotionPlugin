@@ -12,6 +12,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Urbanara\CatalogPromotionPlugin\ElasticSearch\Document\ProductDocument;
+use Urbanara\CatalogPromotionPlugin\ElasticSearch\Document\VariantDocument;
 use Urbanara\CatalogPromotionPlugin\ElasticSearch\View as ElasticSearchView;
 use Urbanara\CatalogPromotionPlugin\ShopApi\View as ShopApiView;
 
@@ -55,6 +56,7 @@ final class CatalogPromotionExtension extends AbstractResourceExtension implemen
         $container->prependExtensionConfig('sylius_elastic_search', [
             'document_classes' => [
                 'product' => ProductDocument::class,
+                'variant' => VariantDocument::class
             ],
             'view_classes' => [
                 'product_variant' => ElasticSearchView\VariantView::class,

@@ -66,17 +66,13 @@ final class ProductDocumentFactory implements ProductDocumentFactoryInterface
     /**
      * {@inheritdoc}
      */
-    public function createFromSyliusSimpleProductModel(
+    public function create(
         ProductInterface $product,
         LocaleInterface $locale,
         ChannelInterface $channel
     ): BaseProductDocument {
         /** @var ProductDocument $productDocument */
-        $productDocument = $this->decoratedFactory->createFromSyliusSimpleProductModel($product, $locale, $channel);
-
-        if (!$product->isSimple()) {
-            return $productDocument;
-        }
+        $productDocument = $this->decoratedFactory->create($product, $locale, $channel);
 
         /** @var ProductVariantInterface $productVariant */
         $productVariant = $product->getVariants()->first();
@@ -87,7 +83,7 @@ final class ProductDocumentFactory implements ProductDocumentFactoryInterface
         }
 
         $productDocument->setOriginalPrice($productDocument->getPrice());
-        $price = $productDocument->getPrice()->getAmount();
+        $price = $productDocument->getPrice()->getOriginalAmount() ?: $productDocument->getPrice()->getAmount();
 
         foreach ($applicableCatalogPromotions as $applicableCatalogPromotion) {
             /** @var CatalogDiscountActionCommandInterface $command */
@@ -102,6 +98,7 @@ final class ProductDocumentFactory implements ProductDocumentFactoryInterface
         $priceDocument = new $this->priceDocumentClass();
         $priceDocument->setAmount($price);
         $priceDocument->setCurrency($productDocument->getOriginalPrice()->getCurrency());
+        $priceDocument->setOriginalAmount($productDocument->getOriginalPrice()->getOriginalAmount());
         $productDocument->setPrice($priceDocument);
 
         $appliedPromotionDocuments = [];

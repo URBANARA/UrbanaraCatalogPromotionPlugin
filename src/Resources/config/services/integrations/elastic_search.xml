@@ -4,7 +4,7 @@
     <services>
         <service id="urbanara_catalog_promotion.elastic_search.product_document_factory"
                  class="Urbanara\CatalogPromotionPlugin\ElasticSearch\Factory\ProductDocumentFactory"
-                 decorates="sylius_elastic_search.factory.product">
+                 decorates="sylius_elastic_search.factory.product" decoration-priority="10">
             <argument type="service" id="urbanara_catalog_promotion.elastic_search.product_document_factory.inner" />
             <argument type="service" id="urbanara_catalog_promotion.provider" />
             <argument type="service" id="urbanara_catalog_promotion.registry_catalog_promotion_action" />

@@ -38,7 +38,7 @@ class ProductDocument extends BaseProductDocument
     /**
      * @return PriceDocument
      */
-    public function getOriginalPrice()
+    public function getOriginalPrice(): ?PriceDocument
     {
         return $this->originalPrice;
     }
@@ -54,7 +54,7 @@ class ProductDocument extends BaseProductDocument
     /**
      * @return Collection
      */
-    public function getAppliedPromotions()
+    public function getAppliedPromotions(): Collection
     {
         return $this->appliedPromotions;
     }
