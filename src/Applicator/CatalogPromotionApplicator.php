@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Urbanara\CatalogPromotionPlugin\Applicator;
 
+use Sylius\Component\Core\Model\OrderItemUnitInterface;
+use Sylius\Component\Core\Promotion\Applicator\UnitsPromotionAdjustmentsApplicatorInterface;
 use Urbanara\CatalogPromotionPlugin\Entity\CatalogPromotionInterface;
 use Urbanara\CatalogPromotionPlugin\Model\CatalogAdjustmentInterface;
-use Sylius\Component\Core\Model\AdjustmentInterface;
+use Sylius\Component\Order\Model\AdjustmentInterface;
 use Sylius\Component\Core\Model\OrderItemInterface;
 use Sylius\Component\Resource\Factory\FactoryInterface;
 
@@ -18,11 +20,21 @@ final class CatalogPromotionApplicator implements CatalogPromotionApplicatorInte
     private $adjustmentFactory;
 
     /**
-     * @param FactoryInterface $adjustmentFactory
+     * @var UnitsPromotionAdjustmentsApplicatorInterface
      */
-    public function __construct(FactoryInterface $adjustmentFactory)
+    private $unitsPromotionAdjustmentsApplicator;
+
+    /**
+     * @param FactoryInterface $adjustmentFactory
+     * @param UnitsPromotionAdjustmentsApplicatorInterface $unitsPromotionAdjustmentsApplicator
+     */
+    public function __construct(
+        FactoryInterface $adjustmentFactory,
+        UnitsPromotionAdjustmentsApplicatorInterface $unitsPromotionAdjustmentsApplicator
+    )
     {
         $this->adjustmentFactory = $adjustmentFactory;
+        $this->unitsPromotionAdjustmentsApplicator = $unitsPromotionAdjustmentsApplicator;
     }
 
     /**
@@ -30,17 +42,19 @@ final class CatalogPromotionApplicator implements CatalogPromotionApplicatorInte
      */
     public function apply(OrderItemInterface $orderItem, CatalogPromotionInterface $catalogPromotion, $amount, $label = '')
     {
-        $adjustment = $this->provideAdjustment($orderItem, $catalogPromotion);
-        $adjustment->setAmount($amount);
-        $adjustment->setLabel($label);
-        $adjustment->setNeutral(true);
-
-        $orderItem->addAdjustment($adjustment);
-        $orderItem->setUnitPrice($orderItem->getUnitPrice() - $amount);
+        foreach ($orderItem->getUnits() as $orderItemUnit) {
+            $adjustment = $this->provideUnitAdjustment($orderItemUnit, $catalogPromotion);
+            $adjustment->setAmount(-$amount);
+            $adjustment->setLabel($label);
+            $orderItemUnit->addAdjustment($adjustment);
+            $orderItemUnit->recalculateAdjustmentsTotal();
+        }
+        $orderItem->recalculateUnitsTotal();
+        $orderItem->recalculateAdjustmentsTotal();
     }
 
-    private function provideAdjustment(
-        OrderItemInterface $orderItem,
+    private function provideUnitAdjustment(
+        OrderItemUnitInterface $orderItem,
         CatalogPromotionInterface $catalogPromotion
     ): AdjustmentInterface {
         $adjustments = $orderItem->getAdjustments(CatalogAdjustmentInterface::CATALOG_PROMOTION_ADJUSTMENT);
@@ -52,9 +66,11 @@ final class CatalogPromotionApplicator implements CatalogPromotionApplicatorInte
 
         /** @var AdjustmentInterface $adjustment */
         $adjustment = $this->adjustmentFactory->createNew();
-        $adjustment->setType(CatalogAdjustmentInterface::CATALOG_PROMOTION_ADJUSTMENT);
+
+        $adjustment->setType(\Sylius\Component\Core\Model\AdjustmentInterface::ORDER_UNIT_PROMOTION_ADJUSTMENT);
         $adjustment->setOriginCode($catalogPromotion->getCode());
 
         return $adjustment;
     }
+
 }

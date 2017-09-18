@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Urbanara\CatalogPromotionPlugin\OrderProcessing;
 
+use Sylius\Component\Core\Model\AdjustmentInterface;
+use Sylius\Component\Core\Model\OrderItemUnit;
 use Urbanara\CatalogPromotionPlugin\Action\CatalogDiscountActionCommandInterface;
 use Urbanara\CatalogPromotionPlugin\Applicator\CatalogPromotionApplicatorInterface;
 use Urbanara\CatalogPromotionPlugin\Entity\CatalogPromotionInterface;
@@ -77,7 +79,9 @@ final class CatalogPromotionProcessor implements OrderProcessorInterface
     private function applyPromotion(ChannelInterface $channel, OrderItemInterface $item)
     {
         $variant = $item->getVariant();
-        $currentPrice = $variant->getChannelPricingForChannel($channel)->getPrice();
+        /** @var OrderItemUnit $orderItemUnit */
+        $orderItemUnit = $item->getUnits()->first();
+        $currentPrice = $item->getUnitPrice() + $orderItemUnit->getAdjustmentsTotal(AdjustmentInterface::TAX_ADJUSTMENT);
 
         /** @var CatalogPromotionInterface $catalogPromotion */
         foreach ($this->catalogPromotionProvider->provide($channel, $variant) as $catalogPromotion) {
