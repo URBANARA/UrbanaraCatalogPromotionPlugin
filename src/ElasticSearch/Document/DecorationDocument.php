@@ -16,7 +16,7 @@ class DecorationDocument
      *
      * @ElasticSearch\Property(type="keyword")
      */
-    private $type;
+    protected $type;
 
     /**
      * JSON-encoded configuration array.
@@ -25,7 +25,7 @@ class DecorationDocument
      *
      * @ElasticSearch\Property(type="keyword")
      */
-    private $configuration;
+    protected $configuration;
 
     /**
      * @return string

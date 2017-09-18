@@ -8,6 +8,7 @@ use ONGR\ElasticsearchBundle\Annotation as ElasticSearch;
 use ONGR\ElasticsearchBundle\Collection\Collection;
 use Sylius\ElasticSearchPlugin\Document\PriceDocument;
 use Sylius\ElasticSearchPlugin\Document\ProductDocument as BaseProductDocument;
+use Urbanara\CatalogPromotionPlugin\ElasticSearch\Document\VariantDocument;
 
 /**
  * @ElasticSearch\Document(type="product")
@@ -19,14 +20,21 @@ class ProductDocument extends BaseProductDocument
      *
      * @ElasticSearch\Embedded(class="Sylius\ElasticSearchPlugin\Document\PriceDocument")
      */
-    private $originalPrice;
+    protected $originalPrice;
 
     /**
      * @var Collection
      *
      * @ElasticSearch\Embedded(class="Urbanara\CatalogPromotionPlugin\ElasticSearch\Document\AppliedPromotionDocument", multiple=true)
      */
-    private $appliedPromotions;
+    protected $appliedPromotions;
+
+    /**
+     * @var Collection
+     *
+     * @ElasticSearch\Embedded(class="Urbanara\CatalogPromotionPlugin\ElasticSearch\Document\VariantDocument", multiple=true)
+     */
+    protected $variants;
 
     public function __construct()
     {
