@@ -67,6 +67,11 @@
             <tag name="form.type" />
         </service>
 
+
+        <service id="urbanara_catalog_promotion.form.type.rule.is_customer_group" class="Sylius\Bundle\CoreBundle\Form\Type\Promotion\Rule\CustomerGroupConfigurationType">
+            <tag name="form.type" />
+        </service>
+
         <service id="urbanara_catalog_promotion.form.type.rule.is_item_delivery_time" class="Urbanara\CatalogPromotionPlugin\Form\Type\Rule\IsItemDeliveryTimeType">
             <tag name="form.type" />
         </service>

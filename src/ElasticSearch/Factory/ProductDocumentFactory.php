@@ -70,6 +70,7 @@ final class ProductDocumentFactory implements ProductDocumentFactoryInterface
         LocaleInterface $locale,
         ChannelInterface $channel
     ): BaseProductDocument {
+
         /** @var ProductDocument $productDocument */
         $productDocument = $this->decoratedFactory->create($product, $locale, $channel);
 
@@ -82,7 +83,8 @@ final class ProductDocumentFactory implements ProductDocumentFactoryInterface
         }
 
         $productDocument->setOriginalPrice($productDocument->getPrice());
-        $price = $productDocument->getPrice()->getOriginalAmount() ?: $productDocument->getPrice()->getAmount();
+        $originalPrice = $productDocument->getPrice()->getOriginalAmount();
+        $price = $originalPrice = !is_null($originalPrice) && $originalPrice > 0 ? $originalPrice : $productDocument->getPrice()->getAmount();
 
         foreach ($applicableCatalogPromotions as $applicableCatalogPromotion) {
             /** @var CatalogDiscountActionCommandInterface $command */
@@ -93,11 +95,13 @@ final class ProductDocumentFactory implements ProductDocumentFactoryInterface
             $price -= $discount;
         }
 
+
+
         /** @var PriceDocument $priceDocument */
         $priceDocument = new $this->priceDocumentClass();
         $priceDocument->setAmount($price);
         $priceDocument->setCurrency($productDocument->getOriginalPrice()->getCurrency());
-        $priceDocument->setOriginalAmount($productDocument->getOriginalPrice()->getOriginalAmount());
+        $priceDocument->setOriginalAmount($originalPrice);
         $productDocument->setPrice($priceDocument);
 
         $appliedPromotionDocuments = [];
