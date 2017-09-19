@@ -13,6 +13,8 @@ use Sylius\Component\Customer\Model\CustomerGroupInterface;
 class IsCustomerGroupRuleChecker implements RuleCheckerInterface
 {
 
+    const TYPE = 'is_customer_group';
+
     /**
      * @var CustomerContextInterface
      */
