@@ -94,6 +94,7 @@ final class ProductDocumentFactory implements ProductDocumentFactoryInterface
 
             $price -= $discount;
         }
+        $price = (int)round($price);
 
 
 
