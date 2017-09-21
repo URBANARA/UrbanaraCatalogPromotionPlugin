@@ -44,7 +44,7 @@ final class CatalogPromotionApplicator implements CatalogPromotionApplicatorInte
     {
         foreach ($orderItem->getUnits() as $orderItemUnit) {
             $adjustment = $this->provideUnitAdjustment($orderItemUnit, $catalogPromotion);
-            $adjustment->setAmount(-$amount);
+            $adjustment->setAmount((int)round(-$amount));
             $adjustment->setLabel($label);
             $orderItemUnit->addAdjustment($adjustment);
             $orderItemUnit->recalculateAdjustmentsTotal();
