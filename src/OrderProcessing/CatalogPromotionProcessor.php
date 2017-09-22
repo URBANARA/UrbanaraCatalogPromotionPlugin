@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Sylius\Component\Core\Model\AdjustmentInterface;
 use Sylius\Component\Core\Model\OrderItemUnit;
+use Sylius\Component\Core\Model\OrderItemUnitInterface;
 use Sylius\Component\Core\Model\PromotionInterface;
 use Sylius\Component\Core\Promotion\Action\PercentageDiscountPromotionActionCommand;
 use Sylius\Component\Core\Promotion\Action\UnitPercentageDiscountPromotionActionCommand;
@@ -87,9 +88,13 @@ final class CatalogPromotionProcessor implements OrderProcessorInterface
         /** @var OrderItemUnit $orderItemUnit */
         $orderItemUnit = $item->getUnits()->first();
 
-        $currentPrice = $item->getUnitPrice() + $orderItemUnit->getAdjustmentsTotal(
-            AdjustmentInterface::TAX_ADJUSTMENT
-        );
+        if ($orderItemUnit instanceof OrderItemUnitInterface) {
+            $currentPrice = $item->getUnitPrice() + $orderItemUnit->getAdjustmentsTotal(
+                    AdjustmentInterface::TAX_ADJUSTMENT
+                );
+        } else {
+            $currentPrice = $item->getUnitPrice();
+        }
 
         /** @var Order $order */
         $order = $item->getOrder();
