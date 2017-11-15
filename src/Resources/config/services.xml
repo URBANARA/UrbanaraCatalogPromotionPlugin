@@ -5,10 +5,8 @@
         <import resource="services/actions.xml"/>
         <import resource="services/blocks.xml"/>
         <import resource="services/decorations.xml"/>
-        <import resource="services/elastic_search.xml"/>
         <import resource="services/forms.xml"/>
         <import resource="services/rules.xml"/>
-        <import resource="services/shop_api.xml"/>
         <import resource="services/twig.xml"/>
         <import resource="services/validators.xml"/>
     </imports>
@@ -19,6 +17,7 @@
 
         <service id="urbanara_catalog_promotion.applicator" class="Urbanara\CatalogPromotionPlugin\Applicator\CatalogPromotionApplicator">
             <argument type="service" id="sylius.factory.adjustment" />
+            <argument type="service" id="sylius.promotion.units_promotion_adjustments_applicator" />
         </service>
 
         <service id="urbanara_catalog_promotion.provider" class="Urbanara\CatalogPromotionPlugin\Provider\CatalogPromotionProvider">
@@ -35,7 +34,7 @@
             <argument type="service" id="urbanara_catalog_promotion.provider" />
             <argument type="service" id="urbanara_catalog_promotion.registry_catalog_promotion_action" />
             <argument type="service" id="urbanara_catalog_promotion.applicator" />
-            <tag name="sylius.order_processor" priority="35" />
+            <tag name="sylius.order_processor" priority="15" />
         </service>
 
         <service id="urbanara_catalog_promotion.registry_catalog_promotion_action" class="Sylius\Component\Registry\ServiceRegistry">

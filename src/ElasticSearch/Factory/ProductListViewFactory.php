@@ -6,7 +6,7 @@ namespace Urbanara\CatalogPromotionPlugin\ElasticSearch\Factory;
 
 use ONGR\FilterManagerBundle\Search\SearchResponse;
 use Sylius\ElasticSearchPlugin\Controller\ProductListView;
-use Sylius\ElasticSearchPlugin\Factory\ProductListViewFactoryInterface;
+use Sylius\ElasticSearchPlugin\Factory\View\ProductListViewFactoryInterface;
 use Urbanara\CatalogPromotionPlugin\ElasticSearch\View\AppliedPromotionView;
 use Urbanara\CatalogPromotionPlugin\ElasticSearch\View\DecorationView;
 use Urbanara\CatalogPromotionPlugin\ElasticSearch\View\PriceView;

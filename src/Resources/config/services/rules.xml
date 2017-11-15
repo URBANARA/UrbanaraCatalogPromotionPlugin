@@ -17,5 +17,10 @@
         <service id="urbanara_catalog_promotion.catalog_promotion_rule.is_item_delivery_time" class="Urbanara\CatalogPromotionPlugin\Rule\IsItemDeliveryTimeRuleChecker">
             <tag name="urbanara_catalog_promotion.catalog_promotion_rule" type="is_item_delivery_time" label="Item delivery time" />
         </service>
+
+        <service id="urbanara_catalog_promotion.catalog_promotion_rule.is_customer_group" class="Urbanara\CatalogPromotionPlugin\Rule\IsCustomerGroupRuleChecker">
+            <argument type="service" id="sylius.context.customer"/>
+            <tag name="urbanara_catalog_promotion.catalog_promotion_rule" type="is_customer_group" label="Customer group" />
+        </service>
     </services>
 </container>

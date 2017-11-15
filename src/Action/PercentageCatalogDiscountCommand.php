@@ -32,7 +32,7 @@ final class PercentageCatalogDiscountCommand implements CatalogDiscountActionCom
 
         $promotionDiscount = $configuration['percentage'];
 
-        return (int) ($currentPrice * $promotionDiscount);
+        return ($currentPrice * $promotionDiscount);
     }
 
     /**

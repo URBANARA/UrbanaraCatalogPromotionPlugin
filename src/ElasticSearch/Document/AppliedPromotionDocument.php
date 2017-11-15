@@ -17,14 +17,14 @@ class AppliedPromotionDocument
      *
      * @ElasticSearch\Property(type="keyword")
      */
-    private $code;
+    protected $code;
 
     /**
      * @var Collection
      *
      * @ElasticSearch\Embedded(class="Urbanara\CatalogPromotionPlugin\ElasticSearch\Document\DecorationDocument", multiple=true)
      */
-    private $decorations;
+    protected $decorations;
 
     public function __construct()
     {

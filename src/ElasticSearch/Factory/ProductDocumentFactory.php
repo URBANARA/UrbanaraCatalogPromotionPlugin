@@ -12,8 +12,7 @@ use Sylius\Component\Locale\Model\LocaleInterface;
 use Sylius\Component\Registry\ServiceRegistryInterface;
 use Sylius\ElasticSearchPlugin\Document\PriceDocument;
 use Sylius\ElasticSearchPlugin\Document\ProductDocument as BaseProductDocument;
-use Sylius\ElasticSearchPlugin\Exception\UnsupportedFactoryMethodException;
-use Sylius\ElasticSearchPlugin\Factory\ProductDocumentFactoryInterface;
+use Sylius\ElasticSearchPlugin\Factory\Document\ProductDocumentFactoryInterface;
 use Urbanara\CatalogPromotionPlugin\Action\CatalogDiscountActionCommandInterface;
 use Urbanara\CatalogPromotionPlugin\Decoration\DecorationConfigurationTranslatorInterface;
 use Urbanara\CatalogPromotionPlugin\ElasticSearch\Document\AppliedPromotionDocument;
@@ -66,17 +65,14 @@ final class ProductDocumentFactory implements ProductDocumentFactoryInterface
     /**
      * {@inheritdoc}
      */
-    public function createFromSyliusSimpleProductModel(
+    public function create(
         ProductInterface $product,
         LocaleInterface $locale,
         ChannelInterface $channel
     ): BaseProductDocument {
-        /** @var ProductDocument $productDocument */
-        $productDocument = $this->decoratedFactory->createFromSyliusSimpleProductModel($product, $locale, $channel);
 
-        if (!$product->isSimple()) {
-            return $productDocument;
-        }
+        /** @var ProductDocument $productDocument */
+        $productDocument = $this->decoratedFactory->create($product, $locale, $channel);
 
         /** @var ProductVariantInterface $productVariant */
         $productVariant = $product->getVariants()->first();
@@ -87,7 +83,8 @@ final class ProductDocumentFactory implements ProductDocumentFactoryInterface
         }
 
         $productDocument->setOriginalPrice($productDocument->getPrice());
-        $price = $productDocument->getPrice()->getAmount();
+        $originalPrice = $productDocument->getPrice()->getOriginalAmount();
+        $price = $originalPrice = !is_null($originalPrice) && $originalPrice > 0 ? $originalPrice : $productDocument->getPrice()->getAmount();
 
         foreach ($applicableCatalogPromotions as $applicableCatalogPromotion) {
             /** @var CatalogDiscountActionCommandInterface $command */
@@ -97,11 +94,15 @@ final class ProductDocumentFactory implements ProductDocumentFactoryInterface
 
             $price -= $discount;
         }
+        $price = (int)round($price);
+
+
 
         /** @var PriceDocument $priceDocument */
         $priceDocument = new $this->priceDocumentClass();
         $priceDocument->setAmount($price);
         $priceDocument->setCurrency($productDocument->getOriginalPrice()->getCurrency());
+        $priceDocument->setOriginalAmount($originalPrice);
         $productDocument->setPrice($priceDocument);
 
         $appliedPromotionDocuments = [];
