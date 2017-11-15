@@ -51,9 +51,6 @@ urbanara_catalog_promotion:
                 message: "Сообщение"
             type: "Тип"
             
-        error:
-            no_product_SKU_list_found_in_rule_criteria: "Заданный SKU на нейден"
-            no_SKU_found_in_product: "SKU не найден в продукте"
     ui:
         action_configuration: "Настройки акции"
         catalog_promotions: "Каталог скидок"
