@@ -1,0 +1,70 @@
+urbanara_catalog_promotion:
+    menu:
+        admin:
+            catalog_promotions: "Каталог скидок"
+
+    form:
+        catalog_promotion:
+            add_decoration: "Добавить оформление"
+            add_rule: "Добавить правило"
+            amount: "Стоимость"
+            channels: "Каналы"
+            code: "Код"
+            decorations: "Оформления"
+            description: "Описание"
+            ends_at: "Завершение в"
+            exclusive: "Эксклюзив"
+            name: "Наименование"
+            percentage: "Процент"
+            priority: "Приоритет"
+            rules: "Правила"
+            starts_at: "Начало в"
+            type: "Тип"
+ 
+        catalog_promotion_rule:
+            type: "Тип"
+            taxons: "Категории"
+            products: "Продукты"
+            product_sku_list: "Список продуктов"
+            delivery_time:
+                form_label: "По доставке"
+                weeks: "Номер недели"
+                criteria: "Критерий"
+
+        catalog_promotion_decoration:
+            active_on_checkout_page: "На странице оформления заказа"
+            active_on_product_display_page: "На странице продукта"
+            active_on_product_listing_page: "На странице списка продуктов"
+            banner:
+                position:
+                    top_left: "Сверху слева"
+                    top: "Вверху"
+                    top_right: "Сверху справа"
+                    left: "Слева"
+                    center: "Центр"
+                    right: "Справа"
+                    bottom_left: "Снизу слева"
+                    bottom: "Внизу"
+                    bottom_right: "Снизу справа"
+                url: "Ссылка"
+            message:
+                message: "Сообщение"
+            type: "Тип"
+            
+    ui:
+        action_configuration: "Настройки акции"
+        catalog_promotions: "Каталог скидок"
+        edit_catalog_promotion: "Редактирование акции"
+        exclusive: "Эксклюзив"
+        manage_catalog_discounts_and_promotional_campaigns: "Управление скидками и акциями"
+        new_catalog_promotion: "Новая акция"
+Fixed discount: "Фиксированная скидка"
+Percentage discount: "Скидка в процентах"
+Is from taxon: "По категории"
+Item delivery time: "По времени доставки"
+Is product: "По продукту"
+Is in product list: "По списку продуктов"
+Strikethrough: "Зачеркнуть"
+Message: "Сообщение"
+Banner: "Баннер"
+Position: "Позиция"
